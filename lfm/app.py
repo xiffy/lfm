@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request
-from config import Config
+from .config import Config
 import requests
 
 app = Flask(__name__)
 config = Config()
+
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_readers():
@@ -13,6 +14,7 @@ def hello_readers():
         payload = {'user': request.form['user'], 'title': 'Your URLs'}
     payload['base_url'] = config.base_url
     return render_template('home.html', context=payload)
+
 
 @app.route('/<user>')
 def recent_tracks(user):
@@ -27,7 +29,8 @@ def recent_tracks(user):
         context = {'user': user,
                    'tracks': json['recenttracks'],
                    'type': 'recent'}
-        return render_template('recent.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8", "Cache-Control": "s-maxage=600"}
+        return render_template('recent.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8",
+                                                                      "Cache-Control": "s-maxage=600"}
     except ValueError:
         return response.content
 
@@ -44,13 +47,16 @@ def loved_tracks(user):
         context = {'user': user,
                    'tracks': json['lovedtracks'],
                    'type': 'loved'}
-        return render_template('loved.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8", "Cache-Control": "s-maxage=600"}
+        return render_template('loved.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8",
+                                                                     "Cache-Control": "s-maxage=600"}
     except ValueError:
         return response.content
+
 
 @app.template_filter('artistlink')
 def make_artistlink(url):
     return '/'.join(url.split('/')[:-2])
+
 
 if __name__ == '__main__':
     app.run()
