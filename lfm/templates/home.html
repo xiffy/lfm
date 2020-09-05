@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RSS Feeds for Last.fm</title>
+</head>
+<body>
+<h1>Last.fm RSS Feeds</h1>
+<p>So you we looking for the RSS Feed of Last.fm, and the discovered they were gone!</p>
+<p>Well, the solution is right here, all you have to do is tell me your username and i'll give you two URLs, one for you recent tracks and one for your loved ones.</p>
+<form name="username" method="post">
+    <input type="text" size="40" placeholder="Last.fm username" name="user" /><input type="submit" value="submit"/>
+</form>
+<h2>{{ context.title }} ({{ context.user }})</h2>
+<h3><a href="https://lfm.xiffy.nl/{{ context.user }}">Recent tracks</a></h3>
+<h3><a href="https://lfm.xiffy.nl/{{ context.user }}/loved">Loved track</a></h3>
+</p>
+
+</body>
+</html>

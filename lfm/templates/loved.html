@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>{{context.user}}</title>
+        <lastBuildDate></lastBuildDate>
+        <language>en</language>
+		<link></link>
+        <description>
+            Last.fm last {{context.type}} tracks from {{context.user}}.
+        </description>
+
+		{% for track in context.tracks.track %}
+            <item>
+                <title>{{track.artist.name}} - {{track.name}}</title>
+                <pubDate>{{track.date['#text']}}</pubDate>
+                <link>{{ track.url}}</link>
+                <guid isPermaLink='false'>{{track.url}}</guid>
+                <description><a href="{{ track.artist.url }}"> {{ track.artist.name }}</a></description>
+            </item>
+		{% endfor %}
+    </channel>
+</rss>
