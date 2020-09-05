@@ -13,5 +13,10 @@ You know the drill;
 # virtualenv -p python3 venv
 # . venv/bin/activate
 # pip install -r requirements.txt
+# cd lfm
+# cp config-sample.py config.py
+# <paste in your lastfm api-key>
+# start.sh
 ```
+Open a browser to http://localhost:5000/
   

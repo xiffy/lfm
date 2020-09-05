@@ -11,6 +11,7 @@ def hello_readers():
         payload = {'user': 'thexiffy', 'title': 'Example URLs'}
     else:
         payload = {'user': request.form['user'], 'title': 'Your URLs'}
+    payload['base_url'] = config.base_url
     return render_template('home.html', context=payload)
 
 @app.route('/<user>')
