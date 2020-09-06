@@ -76,7 +76,7 @@ def make_artistlink(url):
 @app.template_filter('rfc822_date')
 def rfc822_date(datestring):
     if not datestring:
-        nowdt = datetime.now()
+        nowdt = datetime.utcnow()
         return utils.format_datetime(nowdt)
     dt = datetime.strptime(datestring, '%d %b %Y, %H:%M')
     return utils.format_datetime(dt)
