@@ -41,6 +41,8 @@ def recent_tracks(user):
                                                                       "Cache-Control": "s-maxage=600"}
     except ValueError:
         return response.content
+    except KeyError:
+        abort(404)
 
 
 @app.route('/<user>/loved')
