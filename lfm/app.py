@@ -1,9 +1,17 @@
-from flask import Flask, render_template, request
-from .config import Config
+import os
 import requests
+
+from flask import Flask, render_template, request, send_from_directory
+from config import Config
 
 app = Flask(__name__)
 config = Config()
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/', methods=['GET', 'POST'])
