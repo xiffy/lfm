@@ -1,7 +1,7 @@
 import os
 import requests
 
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, abort
 from config import Config
 
 app = Flask(__name__)
@@ -34,15 +34,16 @@ def recent_tracks(user):
     response = requests.get(config.api_base_url, params=payload)
     try:
         json = response.json()
-        context = {'user': user,
-                   'tracks': json['recenttracks'],
-                   'type': 'recent'}
-        return render_template('recent.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8",
-                                                                      "Cache-Control": "s-maxage=600"}
+        if 'recenttracks' in json:
+            context = {'user': user,
+                       'tracks': json['recenttracks'],
+                       'type': 'recent'}
+            return render_template('recent.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8",
+                                                                          "Cache-Control": "s-maxage=600"}
+        else:
+            abort(404)
     except ValueError:
         return response.content
-    except KeyError:
-        abort(404)
 
 
 @app.route('/<user>/loved')
@@ -54,11 +55,14 @@ def loved_tracks(user):
     response = requests.get(config.api_base_url, params=payload)
     try:
         json = response.json()
-        context = {'user': user,
-                   'tracks': json['lovedtracks'],
-                   'type': 'loved'}
-        return render_template('loved.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8",
-                                                                     "Cache-Control": "s-maxage=600"}
+        if 'lovedtracks' in json:
+            context = {'user': user,
+                       'tracks': json['lovedtracks'],
+                       'type': 'loved'}
+            return render_template('loved.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8",
+                                                                         "Cache-Control": "s-maxage=600"}
+        else:
+            abort(404)
     except ValueError:
         return response.content
 
