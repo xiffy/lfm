@@ -12,7 +12,7 @@
 		{% for track in context.tracks.track %}
             <item>
                 <title>{{track.artist['#text']}} - {{track.name}}</title>
-                {% if track.date is defned %}
+                {% if track.date is defined %}
                 <pubDate>{{track.date['#text']}}</pubDate>
                 {%  endif %}
                 <link>{{ track.url}}</link>
