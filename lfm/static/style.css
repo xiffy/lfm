@@ -1,0 +1,24 @@
+body {
+    margin: 20px;
+    font-family: Consolas, "Courier New", monospace;
+    background-color: #ddd;
+    color: #333;
+    }
+
+.content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+footer {
+    position: absolute;
+    bottom: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 45px;
+    max-width: 500px;
+}
+
+footer svg {
+    font-size: 30px;
+}
