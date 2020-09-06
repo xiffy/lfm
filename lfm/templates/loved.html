@@ -15,7 +15,7 @@
                 <pubDate>{{track.date['#text']}}</pubDate>
                 <link>{{ track.url}}</link>
                 <guid isPermaLink='false'>{{track.url}}</guid>
-                <description><a href="{{ track.artist.url }}"> {{ track.artist.name }}</a></description>
+                <description><![CDATA[<a href="{{ track.artist.url }}"> {{ track.artist.name }}</a>]]></description>
             </item>
 		{% endfor %}
     </channel>

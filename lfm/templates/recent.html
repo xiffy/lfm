@@ -17,7 +17,7 @@
                 {%  endif %}
                 <link>{{ track.url}}</link>
                 <guid isPermaLink='false'>{{track.url}}</guid>
-                <description><a href="{{ (track.url|artistlink()) }}"> {{ track.artist['#text'] }}</a></description>
+                <description><![CDATA[<a href="{{ (track.url|artistlink()) }}"> {{ track.artist['#text'] }}</a>]]></description>
             </item>
 		{% endfor %}
     </channel>
