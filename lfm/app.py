@@ -40,7 +40,7 @@ def recent_tracks(user):
                        'tracks': json['recenttracks'],
                        'type': 'recent'}
             return render_template('recent.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8",
-                                                                          "Cache-Control": "s-maxage=600"}
+                                                                          "Cache-Control": "max-age=600"}
         else:
             abort(404)
     except ValueError:
@@ -61,7 +61,7 @@ def loved_tracks(user):
                        'tracks': json['lovedtracks'],
                        'type': 'loved'}
             return render_template('loved.html', context=context), 200, {"Content-type": "text/xml; charset=utf-8",
-                                                                         "Cache-Control": "s-maxage=600"}
+                                                                         "Cache-Control": "max-age=600"}
         else:
             abort(404)
     except ValueError:
