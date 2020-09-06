@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
 		<title>{{context.user}}</title>
-        <lastBuildDate></lastBuildDate>
+        <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
         <language>en</language>
-		<link></link>
+		<link>https://lfm.xiffy.nl/</link>
         <description>
             Last.fm last {{context.type}} tracks from {{context.user}}.
         </description>
@@ -13,7 +13,7 @@
             <item>
                 <title>{{track.artist['#text']}} - {{track.name}}</title>
                 {% if track.date is defined %}
-                <pubDate>{{track.date['#text']}}</pubDate>
+                <pubDate>{{track.date['#text']|rfc822_date}}</pubDate>
                 {%  endif %}
                 <link>{{ track.url}}</link>
                 <guid isPermaLink='false'>{{track.url}}</guid>

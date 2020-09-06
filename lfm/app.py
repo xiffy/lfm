@@ -1,6 +1,7 @@
 import os
 import requests
-
+from email import utils
+from datetime import datetime
 from flask import Flask, render_template, request, send_from_directory, abort
 from config import Config
 
@@ -70,6 +71,15 @@ def loved_tracks(user):
 @app.template_filter('artistlink')
 def make_artistlink(url):
     return '/'.join(url.split('/')[:-2])
+
+
+@app.template_filter('rfc822_date')
+def rfc822_date(datestring):
+    if not datestring:
+        nowdt = datetime.now()
+        return utils.format_datetime(nowdt)
+    dt = datetime.strptime(datestring, '%d %b %Y, %H:%M')
+    return utils.format_datetime(dt)
 
 
 if __name__ == '__main__':

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
 		<title>{{context.user}}</title>
-        <lastBuildDate></lastBuildDate>
+        <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
         <language>en</language>
 		<link></link>
         <description>
@@ -12,7 +12,7 @@
 		{% for track in context.tracks.track %}
             <item>
                 <title>{{track.artist.name}} - {{track.name}}</title>
-                <pubDate>{{track.date['#text']}}</pubDate>
+                <pubDate>{{track.date['#text']|rfc822_date()}}</pubDate>
                 <link>{{ track.url}}</link>
                 <guid isPermaLink='false'>{{track.url}}</guid>
                 <description><![CDATA[<a href="{{ track.artist.url }}"> {{ track.artist.name }}</a>]]></description>
