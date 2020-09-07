@@ -10,13 +10,21 @@ body {
     margin: 0 auto;
 }
 
+aside {
+    margin-top: 40px;
+    margin-bottom:120px;
+    font-size: small;
+}
 footer {
-    position: absolute;
-    bottom: 50px;
-    height: 50px;
+    position: fixed;
+    bottom: 0px;
+    padding-top: 5px;
+    height: 100px;
     text-align: center;
     line-height: 36px;
-    max-width: 500px;
+    width: 500px;
+    background: #ddd;
+    border-top: 1px dotted  #333;
 }
 
 footer svg {
