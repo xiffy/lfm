@@ -15,8 +15,8 @@
     <input type="text" size="40" placeholder="Last.fm username" name="user" /><input type="submit" value="submit"/>
 </form>
 <h2>{{ context.title }} ({{ context.user }})</h2>
-<h3><a href="{{ base_url }}{{ context.user }}">Recent tracks</a> {{ base_url }}{{ context.user }}</h3>
-<h3><a href="{{ base_url }}{{ context.user }}/loved">Loved track</a> {{ base_url }}{{ context.user }}/loved</h3>
+<h3><a href="{{ context.base_url }}{{ context.user }}">Recent tracks</a> {{ context.base_url }}{{ context.user }}</h3>
+<h3><a href="{{ context.base_url }}{{ context.user }}/loved">Loved track</a> {{ context.base_url }}{{ context.user }}/loved</h3>
 </p>
 
 <footer>
