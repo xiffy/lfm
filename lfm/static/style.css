@@ -28,6 +28,7 @@ footer {
     line-height: 36px;
     width: 500px;
     background: #ddd;
+    background: linear-gradient(90deg, rgba(221,221,221,1) 0%, rgba(203,203,203,1) 50%, rgba(221,221,221,1) 100%);
     border-top: 1px dotted  #333;
 }
 
