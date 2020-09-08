@@ -14,6 +14,18 @@ h3 {
     margin: 0 auto;
 }
 
+.urlmaker {
+    background: #eee;
+    padding: 15px 10px 5px;
+    border: 1px solid #333;
+}
+input {
+    font-size: 16px;
+    font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
+    margin: 0 10px 0 0;
+    line-height: 22px;
+}
+
 aside {
     margin-top: 40px;
     margin-bottom:120px;
@@ -28,7 +40,7 @@ footer {
     line-height: 36px;
     width: 500px;
     background: #ddd;
-    background: linear-gradient(90deg, rgba(221,221,221,1) 0%, rgba(203,203,203,1) 50%, rgba(221,221,221,1) 100%);
+    background: linear-gradient(90deg, rgba(221,221,221,1) 0%, rgba(239,239,239,1) 50%, rgba(221,221,221,1) 100%);
     border-top: 1px dotted  #333;
 }
 
