@@ -83,6 +83,51 @@ def loved_tracks(user):
         return response.content
 
 
+@app.route("/<user>/toptracks")
+def toptracks(user):
+    payload = {
+        "api_key": config.api_key,
+        "method": "user.gettoptracks",
+        "user": user,
+        "format": "json",
+        "period": valid_period(request.args),
+    }
+    response = requests.get(config.api_base_url, params=payload)
+    print(valid_period(request.args))
+    try:
+        json = response.json()
+        if "toptracks" in json:
+            context = {
+                "user": user,
+                "tracks": json["toptracks"],
+                "type": f"toptracks/period={valid_period(request.args)}",
+                "title": f"Top trakcs [{valid_period(request.args)}]"}
+            return (
+                render_template("toptracks.html", context=context),
+                200,
+                {
+                    "Content-type": "text/xml; charset=utf-8",
+                    "Cache-Control": "max-age=600",
+                },
+            )
+        else:
+            return json
+    except ValueError:
+        return response.content
+
+
+def valid_period(args):
+    periods = ["overall","7day", "1month", "3month", "6month",  "12month"]
+    alternatives = {"week": "7day", "year": "12month"}
+    arg = args.get("period")
+    if arg in periods:
+        return arg
+    if arg in alternatives:
+        return alternatives[arg]
+    else:
+        return "1month"
+
+
 @app.template_filter("artistlink")
 def make_artistlink(url):
     return "/".join(url.split("/")[:-2])
