@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>{{context.user}}</title>
+        <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
+        <language>en</language>
+		<link>https://lfm.xiffy.nl/{{context.user}}/{{context.type}}</link>
+        <description>
+            Last.fm {{context.user}} {{context.title}} .
+        </description>
+
+		{% for artist in context.artists.artist %}
+            <item>
+                <title>{{artist.name}}</title>
+                <pubDate>{{""|rfc822_date()}}</pubDate>
+                <link>{{ artist.url}}</link>
+                <guid isPermaLink='false'>{{artist.url}}</guid>
+                <description><![CDATA[playcount: {{ artist.playcount }}]]></description>
+            </item>
+		{% endfor %}
+    </channel>
+</rss>

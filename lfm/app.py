@@ -101,7 +101,8 @@ def toptracks(user):
                 "user": user,
                 "tracks": json["toptracks"],
                 "type": f"toptracks/period={valid_period(request.args)}",
-                "title": f"Top trakcs [{valid_period(request.args)}]"}
+                "title": f"Top trakcs [{valid_period(request.args)}]",
+            }
             return (
                 render_template("toptracks.html", context=context),
                 200,
@@ -116,8 +117,42 @@ def toptracks(user):
         return response.content
 
 
+@app.route("/<user>/topartists")
+def topartists(user):
+    payload = {
+        "api_key": config.api_key,
+        "method": "user.gettopartists",
+        "user": user,
+        "format": "json",
+        "period": valid_period(request.args),
+    }
+    response = requests.get(config.api_base_url, params=payload)
+    print(valid_period(request.args))
+    try:
+        json = response.json()
+        if "topartists" in json:
+            context = {
+                "user": user,
+                "artists": json["topartists"],
+                "type": f"topartists/period={valid_period(request.args)}",
+                "title": f"Top artists [{valid_period(request.args)}]",
+            }
+            return (
+                render_template("topartists.html", context=context),
+                200,
+                {
+                    "Content-type": "text/xml; charset=utf-8",
+                    "Cache-Control": "max-age=600",
+                },
+            )
+        else:
+            return json
+    except ValueError:
+        return response.content
+
+
 def valid_period(args):
-    periods = ["overall","7day", "1month", "3month", "6month",  "12month"]
+    periods = ["overall", "7day", "1month", "3month", "6month", "12month"]
     alternatives = {"week": "7day", "year": "12month"}
     arg = args.get("period")
     if arg in periods:
