@@ -16,6 +16,10 @@
                 <link>{{ artist.url}}</link>
                 <guid isPermaLink='false'>{{artist.url}}</guid>
                 <description><![CDATA[playcount: {{ artist.playcount }}]]></description>
+                {% if not "2a96cbd8b46e442fc41c2b86b821562f.png" in artist.image[0]["#text"] %}
+                    <enclosure url="{{ artist.image|image_url() }}" type="image/png"/>
+                {% endif %}
+
             </item>
 		{% endfor %}
     </channel>
