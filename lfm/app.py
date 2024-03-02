@@ -99,7 +99,7 @@ def toptracks(user):
             context = {
                 "user": user,
                 "tracks": json["toptracks"],
-                "type": f"toptracks/period={valid_period(request.args)}",
+                "type": f"toptracks?period={valid_period(request.args)}",
                 "title": f"Top trakcs [{valid_period(request.args)}]",
             }
             return (
@@ -133,7 +133,7 @@ def topartists(user):
             context = {
                 "user": user,
                 "artists": json["topartists"],
-                "type": f"topartists/period={valid_period(request.args)}",
+                "type": f"topartists?period={valid_period(request.args)}",
                 "title": f"Top artists [{valid_period(request.args)}]",
             }
             return (
