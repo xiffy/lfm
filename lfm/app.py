@@ -67,7 +67,6 @@ def loved_tracks(user):
     response = requests.get(config.api_base_url, params=payload)
     try:
         json = response.json()
-        print(json)
         if "lovedtracks" in json:
             context = {"user": user, "tracks": json["lovedtracks"], "type": "loved"}
             return (
