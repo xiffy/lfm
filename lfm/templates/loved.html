@@ -16,6 +16,7 @@
                 <link>{{ track.url}}</link>
                 <guid isPermaLink='false'>{{track.url}}</guid>
                 <description><![CDATA[<a href="{{ track.artist.url }}"> {{ track.artist.name }}</a>]]></description>
+                <enclosure url="{{ track.image|image_url() }}" type="image/png"/>
             </item>
 		{% endfor %}
     </channel>

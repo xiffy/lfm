@@ -67,6 +67,7 @@ def loved_tracks(user):
     response = requests.get(config.api_base_url, params=payload)
     try:
         json = response.json()
+        print(json)
         if "lovedtracks" in json:
             context = {"user": user, "tracks": json["lovedtracks"], "type": "loved"}
             return (
@@ -175,6 +176,17 @@ def rfc822_date(datestring):
         return utils.format_datetime(nowdt)
     dt = datetime.strptime(datestring, "%d %b %Y, %H:%M")
     return utils.format_datetime(dt)
+
+
+@app.template_filter("image_url")
+def find_image_url(images):
+    if not images:
+        return ''
+    else:
+        for image in images:
+            if image["size"] == "large":
+                return image["#text"]
+    return ''
 
 
 if __name__ == "__main__":
