@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSS Feeds for Last.fm</title>
     <link rel="stylesheet" href="/static/style.css?v4"/>
-    <meta name="description" content="RSS Feed for your last.fm recent tracks and loved tracks. all you have to do is tell me your username and i'll give you four URLs, one for you recent tracks and one for your loved ones.">
+    <meta name="description" content="RSS Feed for your last.fm recent tracks and loved tracks. all you have to do is tell me your username and i'll give you four URLs, one for you recent tracks, one for your loved ones, one for your top tracks and one for your top artists">
     <meta name="keywords" content="RSS, Last.fm, Python, RSS Feed, Recent tracks,Loved tracks">
 </head>
 <body class="content">
@@ -21,10 +21,12 @@
     <h2>{{ context.title }} ({{ context.user }})</h2>
     <h3><a href="{{ context.base_url }}{{ context.user }}">Recent tracks</a></h3> {{ context.base_url }}{{ context.user }}
     <h3><a href="{{ context.base_url }}{{ context.user }}/loved">Loved tracks</a></h3> {{ context.base_url }}{{ context.user }}/loved
-    <h3><a href="{{ context.base_url }}{{ context.user }}/toptracks">Top tracks</a></h3> {{ context.base_url }}{{ context.user }}/toptracks?period=1month <br/>
-    {{ context.base_url }}{{ context.user }}/toptracks?period=<em>period</em> [7day, 1month, 3month, 6month, 12month or overall]
-        <h3><a href="{{ context.base_url }}{{ context.user }}/toptracks">Top tracks</a></h3> {{ context.base_url }}{{ context.user }}/topartists?period=1month <br/>
-    {{ context.base_url }}{{ context.user }}/topartists?period=<em>period</em> [7day, 1month, 3month, 6month, 12month or overall]
+    <h3><a href="{{ context.base_url }}{{ context.user }}/toptracks">Top tracks</a></h3> {{ context.base_url }}{{ context.user }}/toptracks <br/>
+    {{ context.base_url }}{{ context.user }}/toptracks?period=6month
+    <h3><a href="{{ context.base_url }}{{ context.user }}/topartists">Top Artists</a></h3> {{ context.base_url }}{{ context.user }}/topartists <br/>
+    {{ context.base_url }}{{ context.user }}/topartists?period=7day
+
+    <p>period can be: 7day, 1month, 3month, 6month, 12month or overall</p>
 
 </div>
 
