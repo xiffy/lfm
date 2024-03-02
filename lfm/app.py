@@ -51,7 +51,7 @@ def recent_tracks(user):
                 },
             )
         else:
-            abort(404)
+            abort(response.status_code)
     except ValueError:
         return response.content
 
@@ -79,7 +79,7 @@ def loved_tracks(user):
                 },
             )
         else:
-            abort(404)
+            abort(response.status_code)
     except ValueError:
         return response.content
 
@@ -94,7 +94,6 @@ def toptracks(user):
         "period": valid_period(request.args),
     }
     response = requests.get(config.api_base_url, params=payload)
-    print(valid_period(request.args))
     try:
         json = response.json()
         if "toptracks" in json:
@@ -148,6 +147,7 @@ def topartists(user):
             )
         else:
             return json
+
     except ValueError:
         return response.content
 
