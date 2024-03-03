@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>{{context.user}}</title>
+        <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
+        <language>en</language>
+		<link>https://lfm.xiffy.nl/{{context.user}}/{{context.type}}</link>
+        <description>
+            Last.fm {{context.user}} {{context.title}} .
+        </description>
+
+		{% for track in context.tracks %}
+            <item>
+                <title>{{track.artist["#text"]}} - {{track.name}}</title>
+                <pubDate>{{context.track_dt}}</pubDate>
+                <link>{{ track.url}}</link>
+                <guid isPermaLink='false'>{{track.url}}</guid>
+                <description><![CDATA[playcount: {{ track.playcount }}]]></description>
+                {% if not "2a96cbd8b46e442fc41c2b86b821562f.png" in track.image[0]["#text"] %}
+                    <enclosure url="{{ track.image|image_url() }}" type="image/png"/>
+                {% endif %}
+            </item>
+		{% endfor %}
+    </channel>
+</rss>

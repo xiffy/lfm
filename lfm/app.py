@@ -100,7 +100,7 @@ def toptracks(user):
                 "user": user,
                 "tracks": json["toptracks"],
                 "type": f"toptracks?period={valid_period(request.args)}",
-                "title": f"Top trakcs [{valid_period(request.args)}]",
+                "title": f"Top tracks [{valid_period(request.args)}]",
             }
             return (
                 render_template("toptracks.html", context=context),
@@ -126,7 +126,6 @@ def topartists(user):
         "period": valid_period(request.args),
     }
     response = requests.get(config.api_base_url, params=payload)
-    print(valid_period(request.args))
     try:
         json = response.json()
         if "topartists" in json:
@@ -148,6 +147,47 @@ def topartists(user):
             return json
 
     except ValueError:
+        return response.content
+
+
+@app.route("/<user>/weeklytracks")
+def get_weeklytracks(user):
+    print(valid_period(request.args))
+    payload = {
+        "api_key": config.api_key,
+        "method": "user.getweeklytrackchart",
+        "user": user,
+        "format": "json",
+        "period": valid_period(request.args),
+    }
+    response = requests.get(config.api_base_url, params=payload)
+    try:
+        json = response.json()
+        if "weeklytrackchart" in json:
+            from_dt = datetime.fromtimestamp(
+                int(json["weeklytrackchart"]["@attr"]["from"])
+            )
+            to_dt = datetime.fromtimestamp(int(json["weeklytrackchart"]["@attr"]["to"]))
+            print(f"{from_dt} - {to_dt}")
+            context = {
+                "user": user,
+                "tracks": json["weeklytrackchart"]["track"],
+                "type": f"weeklytracks",
+                "title": f"Weekly top tracks [{from_dt} - {to_dt}]",
+                "track_dt": str(to_dt),
+            }
+            return (
+                render_template("weekly.html", context=context),
+                200,
+                {
+                    "Content-type": "text/xml; charset=utf-8",
+                    "Cache-Control": "max-age=600",
+                },
+            )
+        else:
+            return json
+    except ValueError as e:
+        print(e)
         return response.content
 
 
@@ -180,12 +220,12 @@ def rfc822_date(datestring):
 @app.template_filter("image_url")
 def find_image_url(images):
     if not images:
-        return ''
+        return ""
     else:
         for image in images:
             if image["size"] == "large":
                 return image["#text"]
-    return ''
+    return ""
 
 
 if __name__ == "__main__":
