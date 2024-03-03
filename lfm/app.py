@@ -152,15 +152,19 @@ def topartists(user):
 
 @app.route("/<user>/weeklytracks")
 def get_weeklytracks(user):
-    print(valid_period(request.args))
     payload = {
         "api_key": config.api_key,
         "method": "user.getweeklytrackchart",
         "user": user,
         "format": "json",
-        "period": valid_period(request.args),
     }
+    if "weeks" in request.args:
+        period = from_to(user, request.args.get("weeks"))
+        payload["from"] = period[0]
+        payload["to"] = period[1]
+
     response = requests.get(config.api_base_url, params=payload)
+
     try:
         json = response.json()
         if "weeklytrackchart" in json:
@@ -168,7 +172,6 @@ def get_weeklytracks(user):
                 int(json["weeklytrackchart"]["@attr"]["from"])
             )
             to_dt = datetime.fromtimestamp(int(json["weeklytrackchart"]["@attr"]["to"]))
-            print(f"{from_dt} - {to_dt}")
             context = {
                 "user": user,
                 "tracks": json["weeklytrackchart"]["track"],
@@ -201,6 +204,23 @@ def valid_period(args):
         return alternatives[arg]
     else:
         return "1month"
+
+
+def from_to(user, weeks: int=None):
+    if weeks is None:
+        return [None, None]
+    payload = {
+        "api_key": config.api_key,
+        "method": "user.getweeklychartlist",
+        "user": user,
+        "format": "json",
+    }
+    response = requests.get(config.api_base_url, params=payload)
+    json = response.json()
+    weeks = int(weeks)
+    charts = json["weeklychartlist"]["chart"][-weeks:]
+    return [charts[0]["from"], charts[weeks - 1]["to"]]
+
 
 
 @app.template_filter("artistlink")
