@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
-		<title>{{context.user}}</title>
+		<title>{{context.user}} {{ context.title }}</title>
         <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
         <language>en</language>
 		<link>https://lfm.xiffy.nl/{{context.user}}/{{context.type}}</link>

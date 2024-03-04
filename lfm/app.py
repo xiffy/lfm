@@ -158,8 +158,10 @@ def get_weeklytracks(user):
         "user": user,
         "format": "json",
     }
+    weeks = None
     if "weeks" in request.args:
-        period = from_to(user, request.args.get("weeks"))
+        weeks = request.args.get("weeks")
+        period = from_to(user, weeks)
         payload["from"] = period[0]
         payload["to"] = period[1]
 
@@ -168,15 +170,15 @@ def get_weeklytracks(user):
     try:
         json = response.json()
         if "weeklytrackchart" in json:
-            from_dt = datetime.fromtimestamp(
-                int(json["weeklytrackchart"]["@attr"]["from"])
-            )
             to_dt = datetime.fromtimestamp(int(json["weeklytrackchart"]["@attr"]["to"]))
+            title = "Weekly top tracks."
+            if period:
+                title += f" (period: {weeks} weeks)"
             context = {
                 "user": user,
                 "tracks": json["weeklytrackchart"]["track"],
                 "type": f"weeklytracks",
-                "title": f"Weekly top tracks [{from_dt} - {to_dt}]",
+                "title": title,
                 "track_dt": str(to_dt),
             }
             return (
