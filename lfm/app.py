@@ -208,7 +208,7 @@ def valid_period(args):
         return "1month"
 
 
-def from_to(user, weeks: int=None):
+def from_to(user, weeks: int = None):
     if weeks is None:
         return [None, None]
     payload = {
@@ -222,7 +222,6 @@ def from_to(user, weeks: int=None):
     weeks = int(weeks)
     charts = json["weeklychartlist"]["chart"][-weeks:]
     return [charts[0]["from"], charts[weeks - 1]["to"]]
-
 
 
 @app.template_filter("artistlink")
