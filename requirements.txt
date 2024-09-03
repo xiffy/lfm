@@ -12,3 +12,4 @@ requests==2.31.0
 urllib3==2.1.0
 Werkzeug==3.0.1
 zipp==3.17.0
+python-dotenv==1.0.1
