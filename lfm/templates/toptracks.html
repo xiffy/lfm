@@ -3,7 +3,7 @@
 		<title>{{context.user}} - {{ context.title }}</title>
         <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
         <language>en</language>
-		<link>https://www.last.fm/user/{{context.user}}/library/tracks?date_preset?data_preset={{ context.date_preset }}</link>
+		<link>https://www.last.fm/user/{{context.user}}/library/tracks?date_preset?data_preset={{ context.date_preset }}&sort=scrobbles_desc</link>
         <description>
             Last.fm {{context.user}} {{context.title}}.
         </description>
