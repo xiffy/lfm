@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lfm="https://www.last.fm/api">
 	<channel>
 		<title>{{context.user}} - loved tracks</title>
         <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
         <language>en</language>
-		<link>https://lfm.xiffy.nl/{{context.user}}/{{context.type}}</link>
+        <link>https://www.last.fm/user/{{context.user}}/loved</link>
         <description>
             Last.fm last {{context.type}} tracks from {{context.user}}.
         </description>
+        <generator> https://github.com/xiffy/lfm </generator>
+        <author>{{context.user}}</author>
+        <lfm:total>{{context.tracks["@attr"]["total"]}}</lfm:total>
+        <lfm:user>{{context.tracks["@attr"]["user"]}}</lfm:user>
 
 		{% for track in context.tracks.track %}
             <item>
@@ -19,6 +23,16 @@
                 {% if not "2a96cbd8b46e442fc41c2b86b821562f.png" in track.image[0]["#text"] %}
                     <enclosure url="{{ track.image|image_url() }}" type="image/png"/>
                 {% endif %}
+                <lfm:artist>{{track.artist.name}}</lfm:artist>
+                <lfm:artist_url>{{track.artist.url}}</lfm:artist_url>
+                <lfm:date>{{track.date['#text']}}</lfm:date>
+                <lfm:date_uts>{{track.date.uts}}</lfm:date_uts>
+                <lfm:track>{{track.name}}</lfm:track>
+                <lfm:track_url>{{track.url}}</lfm:track_url>
+                <lfm:mbid>{{track.mbid}}</lfm:mbid>
+                <lfm:library_track>https://www.last.fm/user/{{context.user|urlencode}}/library/music/{{track.artist.name|urlencode}}/_/{{track.name|urlencode}}</lfm:library_track>
+                <lfm:library_artist>https://www.last.fm/user/{{context.user|urlencode}}/library/music/{{track.artist.name|urlencode}}</lfm:library_artist>
+
             </item>
 		{% endfor %}
     </channel>
