@@ -181,7 +181,7 @@ def get_weeklytracks(user):
             context = {
                 "user": user,
                 "tracks": json["weeklytrackchart"]["track"],
-                "type": f"weeklytracks",
+                "type": "weeklytracks",
                 "title": title,
                 "track_dt": str(to_dt),
             }
@@ -211,10 +211,19 @@ def valid_period(args):
     else:
         return "1month"
 
-def period_to_website(period):
-    return {"7day": "LAST_7_DAYS", "1month": "LAST_30_DAYS", "3month": "LAST_90_DAYS", "6month": "LAST_180_DAYS", "12month": "LAST_365_DAYS", "overall": "ALL"}[period]
 
-def from_to(user, weeks: int=None):
+def period_to_website(period):
+    return {
+        "7day": "LAST_7_DAYS",
+        "1month": "LAST_30_DAYS",
+        "3month": "LAST_90_DAYS",
+        "6month": "LAST_180_DAYS",
+        "12month": "LAST_365_DAYS",
+        "overall": "ALL",
+    }[period]
+
+
+def from_to(user, weeks: int = None):
     if weeks is None:
         return [None, None]
     payload = {
@@ -228,7 +237,6 @@ def from_to(user, weeks: int=None):
     weeks = int(weeks)
     charts = json["weeklychartlist"]["chart"][-weeks:]
     return [charts[0]["from"], charts[weeks - 1]["to"]]
-
 
 
 @app.template_filter("artistlink")
