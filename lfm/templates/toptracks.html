@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
 		<title>{{context.user}} - {{ context.title }}</title>
         <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
         <language>en</language>
-		<link>https://lfm.xiffy.nl/{{context.user}}/{{context.type}}</link>
+		<link>https://www.last.fm/user/{{context.user}}/library/tracks?date_preset?data_preset={{ context.date_preset }}</link>
         <description>
-            Last.fm {{context.user}} {{context.title}} .
+            Last.fm {{context.user}} {{context.title}}.
         </description>
+        <generator> https://github.com/xiffy/lfm </generator>
 
 		{% for track in context.tracks.track %}
             <item>
                 <title>{{track.artist.name}} - {{track.name}}</title>
                 <pubDate>{{""|rfc822_date()}}</pubDate>
-                <link>{{ track.url}}</link>
+                <link>{{ track.url }}</link>
                 <guid isPermaLink='false'>{{track.url}}</guid>
                 <description><![CDATA[<a href="{{ track.artist.url }}"> {{ track.artist.name }}</a>
                     playcount: {{ track.playcount }}]]></description>

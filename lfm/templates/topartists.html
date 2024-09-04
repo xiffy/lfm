@@ -4,10 +4,11 @@
 		<title>{{context.user}} - {{ context.title }}</title>
         <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
         <language>en</language>
-		<link>https://lfm.xiffy.nl/{{context.user}}/{{context.type}}</link>
+		<link>https://www.last.fm/user/{{context.user}}/library/artists?data_preset={{ context.date_preset }}</link>
         <description>
             Last.fm {{context.user}} - {{context.title}} .
         </description>
+        <generator> https://github.com/xiffy/lfm </generator>
 
 		{% for artist in context.artists.artist %}
             <item>
