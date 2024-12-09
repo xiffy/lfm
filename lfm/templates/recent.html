@@ -32,8 +32,8 @@
                 <lfm:album>{{track.album['#text']}}</lfm:album>
                 <lfm:album_mbid>{{track.album.mbid}}</lfm:album_mbid>
                 <lfm:library_track>https://www.last.fm/user/{{context.user|urlencode}}/library/music/{{track.artist['#text']|urlencode}}/_/{{track.name|urlencode}}</lfm:library_track>
-                <lfm:library_artist>https://www.last.fm/user/{{context.user}}|urlencode/library/music/{{track.artist['#text']|urlencode}}</lfm:library_artist>
-                <lfm:library_album>https://www.last.fm/user/{{context.user}}|urlencode/library/music/{{track.artist['#text']|urlencode}}/{{track.album['#text']|urlencode}}</lfm:library_album>
+                <lfm:library_artist>https://www.last.fm/user/{{context.user|urlencode}}/library/music/{{track.artist['#text']|urlencode}}</lfm:library_artist>
+                <lfm:library_album>https://www.last.fm/user/{{context.user|urlencode}}/library/music/{{track.artist['#text']|urlencode}}/{{track.album['#text']|urlencode}}</lfm:library_album>
             </item>
 		{% endfor %}
     </channel>
