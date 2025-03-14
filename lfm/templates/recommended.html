@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lfm="https://www.last.fm/api">
+	<channel>
+		<title>{{context.user}} - recommended tracks</title>
+        <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
+        <language>en</language>
+		<link>https://www.last.fm/player/station/user/{{ context.user }}/recommended?page=1</link>
+        <description>
+            Last.fm recommended tracks from {{context.user}}.
+        </description>
+        <generator> https://github.com/xiffy/lfm </generator>
+
+		{% for track in context.playlist %}
+            <item>
+                <title>{{track.artists[0].name}} - {{track.name}}</title>
+                <link>https://www.last.fm/{{ track.url }}</link>
+                <guid isPermaLink='false'>{{track.url}}</guid>
+                <description>
+                    <![CDATA[
+                    <a href="{{ track._playlinks[0].url }}">{{ track._playlinks[0].affiliate }}</a>
+                        <br /><a href="https://www.last.fm/{{ track.artists[0].url }}">LastFM Artist</a>
+                    ]]>
+                </description>
+            </item>
+		{% endfor %}
+    </channel>
+</rss>

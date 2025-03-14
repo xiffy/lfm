@@ -200,6 +200,36 @@ def get_weeklytracks(user):
         return response.content
 
 
+@app.route("/<user>/recommended")
+def get_recommended_tracks(user):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+    }
+
+    response = requests.get(
+        f"https://www.last.fm/player/station/user/{user}/recommended?page=1&ajax=1",
+        headers=headers,
+    )
+    try:
+        json = response.json()
+        if "playlist" in json:
+            context = {"playlist": json["playlist"], "user": user}
+            output = render_template("recommended.html", context=context)
+            return (
+                output,
+                200,
+                {
+                    "Content-type": "text/xml; charset=utf-8",
+                    "Cache-Control": "max-age=600",
+                },
+            )
+        else:
+            return json
+    except ValueError as e:
+        print(e)
+        return response.content
+
+
 def valid_period(args):
     periods = ["overall", "7day", "1month", "3month", "6month", "12month"]
     alternatives = {"week": "7day", "year": "12month"}
