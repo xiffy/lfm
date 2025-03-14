@@ -1,2 +1,11 @@
 /lfm/config.py
 /doc/secrets
+
+# Virtual Environment
+**/.venv
+
+# .env file
+**/.env
+
+# VS Code
+.vscode/

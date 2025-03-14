@@ -85,12 +85,13 @@ def loved_tracks(user):
 
 @app.route("/<user>/toptracks")
 def toptracks(user):
+    period = valid_period(request.args)
     payload = {
         "api_key": config.api_key,
         "method": "user.gettoptracks",
         "user": user,
         "format": "json",
-        "period": valid_period(request.args),
+        "period": period,
     }
     response = requests.get(config.api_base_url, params=payload)
     try:
@@ -99,8 +100,9 @@ def toptracks(user):
             context = {
                 "user": user,
                 "tracks": json["toptracks"],
-                "type": f"toptracks?period={valid_period(request.args)}",
-                "title": f"Top tracks [{valid_period(request.args)}]",
+                "type": f"toptracks?period={period}",
+                "title": f"Top tracks [{period}]",
+                "date_preset": period_to_website(period),
             }
             return (
                 render_template("toptracks.html", context=context),
@@ -118,12 +120,13 @@ def toptracks(user):
 
 @app.route("/<user>/topartists")
 def topartists(user):
+    period: str = valid_period(request.args)
     payload = {
         "api_key": config.api_key,
         "method": "user.gettopartists",
         "user": user,
         "format": "json",
-        "period": valid_period(request.args),
+        "period": period,
     }
     response = requests.get(config.api_base_url, params=payload)
     try:
@@ -132,8 +135,9 @@ def topartists(user):
             context = {
                 "user": user,
                 "artists": json["topartists"],
-                "type": f"topartists?period={valid_period(request.args)}",
-                "title": f"Top artists [{valid_period(request.args)}]",
+                "type": f"topartists?period={period}",
+                "title": f"Top artists [{period}]",
+                "date_preset": period_to_website(period),
             }
             return (
                 render_template("topartists.html", context=context),
@@ -177,7 +181,7 @@ def get_weeklytracks(user):
             context = {
                 "user": user,
                 "tracks": json["weeklytrackchart"]["track"],
-                "type": f"weeklytracks",
+                "type": "weeklytracks",
                 "title": title,
                 "track_dt": str(to_dt),
             }
@@ -206,6 +210,17 @@ def valid_period(args):
         return alternatives[arg]
     else:
         return "1month"
+
+
+def period_to_website(period):
+    return {
+        "7day": "LAST_7_DAYS",
+        "1month": "LAST_30_DAYS",
+        "3month": "LAST_90_DAYS",
+        "6month": "LAST_180_DAYS",
+        "12month": "LAST_365_DAYS",
+        "overall": "ALL",
+    }[period]
 
 
 def from_to(user, weeks: int = None):

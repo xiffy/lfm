@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:lfm="https://www.last.fm/api">
 	<channel>
 		<title>{{context.user}} - {{ context.title }}</title>
         <lastBuildDate>{{ ''|rfc822_date() }}</lastBuildDate>
         <language>en</language>
-		<link>https://lfm.xiffy.nl/{{context.user}}/{{context.type}}</link>
+		<link>https://www.last.fm/user/{{context.user}}/library/artists?date_preset={{ context.date_preset }}&amp;sort=scrobbles_desc</link>
         <description>
-            Last.fm {{context.user}} - {{context.title}} .
+            Last.fm {{context.user}} - {{context.title}}.
         </description>
+        <generator> https://github.com/xiffy/lfm </generator>
+        <lfm:total>{{context.artists["@attr"]["total"]}}</lfm:total>
+        <lfm:user>{{context.artists["@attr"]["user"]}}</lfm:user>
 
 		{% for artist in context.artists.artist %}
             <item>
@@ -19,6 +22,13 @@
                 {% if not "2a96cbd8b46e442fc41c2b86b821562f.png" in artist.image[0]["#text"] %}
                     <enclosure url="{{ artist.image|image_url() }}" type="image/png"/>
                 {% endif %}
+                <lfm:streamable>{{artist.streamable}}</lfm:streamable>
+                <lfm:artist>{{artist.name}}</lfm:artist>
+                <lfm:artist_url>{{artist.url}}</lfm:artist_url>
+                <lfm:artist_mbid>{{artist.mbid}}</lfm:artist_mbid>
+                <lfm:playcount>{{artist.playcount}}</lfm:playcount>
+                <lfm:rank>{{artist["@attr"]["rank"]}}</lfm:rank>
+                <lfm:library_artist>https://www.last.fm/user/{{context.user|urlencode}}/library/music/{{artist.name|urlencode}}</lfm:library_artist>
 
             </item>
 		{% endfor %}
