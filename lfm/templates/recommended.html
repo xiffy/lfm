@@ -13,7 +13,7 @@
 		{% for track in context.playlist %}
             <item>
                 <title>{{track.artists[0].name}} - {{track.name}}</title>
-                <link>https://www.last.fm/{{ track.url }}</link>
+                <link>https://www.last.fm{{ track.url }}</link>
                 <guid isPermaLink='false'>{{track.url}}</guid>
                 <pubDate>{{ ''|rfc822_date() }}</pubDate>
                 <description>
