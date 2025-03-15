@@ -15,10 +15,11 @@
                 <title>{{track.artists[0].name}} - {{track.name}}</title>
                 <link>https://www.last.fm/{{ track.url }}</link>
                 <guid isPermaLink='false'>{{track.url}}</guid>
+                <pubDate>{{ ''|rfc822_date() }}</pubDate>
                 <description>
                     <![CDATA[
                     <a href="{{ track._playlinks[0].url }}">{{ track._playlinks[0].affiliate }}</a>
-                        <br /><a href="https://www.last.fm/{{ track.artists[0].url }}">LastFM Artist</a>
+                        <br /><a href="https://www.last.fm/{{ track.artists[0].url }}">LastFM Artist: {{ track.artists[0].name }}</a>
                     ]]>
                 </description>
             </item>
