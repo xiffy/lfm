@@ -200,7 +200,7 @@ def get_weeklytracks(user):
         return response.content
 
 
-@app.route("/<user>/recommended", defaults={'as_json': ''})
+@app.route("/<user>/recommended", defaults={"as_json": ""})
 @app.route("/<user>/recommended/<as_json>")
 def get_recommended_tracks(user, as_json):
     headers = {
@@ -275,14 +275,18 @@ def from_to(user, weeks: int = None):
 
 
 def make_recommended_json(context):
-    output = {'title': f'Last.fm recommended tracks for: {context["user"]}',
-              'description': f'Generated {rfc822_date()}'}
+    output = {
+        "title": f'Last.fm recommended tracks for: {context["user"]}',
+        "description": f'Generated {rfc822_date("")}',
+    }
     tracklist = []
-    for track in context['playlist']:
-        tracklist.append({'title': track['name'],
-                          'artists': track['artists'][0]['name']})
-    output['tracklist'] = tracklist
+    for track in context["playlist"]:
+        tracklist.append(
+            {"title": track["name"], "artists": track["artists"][0]["name"]}
+        )
+    output["tracklist"] = tracklist
     return output
+
 
 @app.template_filter("artistlink")
 def make_artistlink(url):
