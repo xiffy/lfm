@@ -2,7 +2,7 @@ import os
 import requests
 from email import utils
 from datetime import datetime
-from flask import Flask, render_template, request, send_from_directory, abort
+from flask import Flask, render_template, request, send_from_directory, abort, jsonify
 from config import Config
 
 app = Flask(__name__)
@@ -200,8 +200,9 @@ def get_weeklytracks(user):
         return response.content
 
 
-@app.route("/<user>/recommended")
-def get_recommended_tracks(user):
+@app.route("/<user>/recommended", defaults={'as_json': ''})
+@app.route("/<user>/recommended/<as_json>")
+def get_recommended_tracks(user, as_json):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
     }
@@ -214,15 +215,19 @@ def get_recommended_tracks(user):
         json = response.json()
         if "playlist" in json:
             context = {"playlist": json["playlist"], "user": user}
-            output = render_template("recommended.html", context=context)
-            return (
-                output,
-                200,
-                {
-                    "Content-type": "text/xml; charset=utf-8",
-                    "Cache-Control": "max-age=600",
-                },
-            )
+            if not as_json:
+                output = render_template("recommended.html", context=context)
+                return (
+                    output,
+                    200,
+                    {
+                        "Content-type": "text/xml; charset=utf-8",
+                        "Cache-Control": "max-age=600",
+                    },
+                )
+            else:
+                output = make_recommended_json(context)
+                return jsonify(output)
         else:
             return json
     except ValueError as e:
@@ -268,6 +273,16 @@ def from_to(user, weeks: int = None):
     charts = json["weeklychartlist"]["chart"][-weeks:]
     return [charts[0]["from"], charts[weeks - 1]["to"]]
 
+
+def make_recommended_json(context):
+    output = {'title': f'Last.fm recommended tracks for: {context["user"]}',
+              'description': f'Generated {rfc822_date()}'}
+    tracklist = []
+    for track in context['playlist']:
+        tracklist.append({'title': track['name'],
+                          'artists': track['artists'][0]['name']})
+    output['tracklist'] = tracklist
+    return output
 
 @app.template_filter("artistlink")
 def make_artistlink(url):
